@@ -8,7 +8,7 @@ from ..schemas.billing import Plan, PlanFeature, PlansResponse, SubscriptionResp
 
 router = APIRouter(prefix="/billing-management", tags=["Billing"])
 
-USER_MANAGEMENT_URL = os.getenv("USER_MANAGEMENT_URL", "http://192.168.68.111:8001/user-management/company")
+USER_SERVICE_URL = os.getenv("USER_SERVICE_URL", "http://192.168.68.111:8002/user")
 
 SECRET_KEY = os.environ.get('JWT_SECRET_KEY', 'secret_key')
 ALGORITHM = "HS256"
@@ -59,7 +59,7 @@ SUBSCRIPTION_PLANS = [
 ]
 
 def link_subscription_to_user(subscription_data: UserManagementSubscriptionRequest, token: str):
-    api_url = USER_MANAGEMENT_URL
+    api_url = USER_SERVICE_URL
     endpoint = "/assign-plan" 
     headers = {
         "token": f"{token}",
