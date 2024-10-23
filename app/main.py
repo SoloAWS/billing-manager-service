@@ -4,15 +4,17 @@ from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 
 from .errors.errors import ApiError
+from .routers import billing
 
 app = FastAPI()
 
 version = "1.0"
 
+app.include_router(billing.router)
 
-@app.get("/microservice/health")
+@app.get("/billing-manager-service/health")
 async def health():
-    return {"status": "OK Python"}
+    return {"status": "OK"}
 
 @app.exception_handler(ApiError)
 async def api_error_exception_handler(request: Request, exc: ApiError):
