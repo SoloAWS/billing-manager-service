@@ -12,7 +12,7 @@ version = "1.0"
 
 app.include_router(billing.router)
 
-@app.get("/billing-manager-service/health")
+@app.get("/billing-manager/health")
 async def health():
     return {"status": "OK"}
 
