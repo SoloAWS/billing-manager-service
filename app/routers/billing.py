@@ -6,7 +6,7 @@ import jwt
 import requests as http_requests
 from ..schemas.billing import Plan, PlanFeature, PlansResponse, SubscriptionResponse, SubscriptionRequest, UserManagementSubscriptionRequest
 
-router = APIRouter(prefix="/billing-management", tags=["Billing"])
+router = APIRouter(prefix="/billing-manager", tags=["Billing"])
 
 USER_SERVICE_URL = os.getenv("USER_SERVICE_URL", "http://192.168.68.111:8002/user")
 
