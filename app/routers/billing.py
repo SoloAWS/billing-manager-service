@@ -60,7 +60,7 @@ SUBSCRIPTION_PLANS = [
 
 def link_subscription_to_user(subscription_data: UserManagementSubscriptionRequest, token: str):
     api_url = USER_SERVICE_URL
-    endpoint = "/assign-plan" 
+    endpoint = "/company/assign-plan" 
     headers = {
         "token": f"{token}",
         "Content-Type": "application/json"
