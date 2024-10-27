@@ -33,7 +33,7 @@ def mock_get_current_user():
 
 def test_get_plans_success(test_token):
     response = client.get(
-        "/billing-management/plans",
+        "/billing-manager/plans",
         headers={"token": test_token}
     )
     
@@ -61,7 +61,7 @@ def test_subscribe_to_plan_success(test_token, mock_link_subscription):
     }
 
     response = client.post(
-        "/billing-management/assign-plan",
+        "/billing-manager/assign-plan",
         json=request_data,
         headers={"token": test_token}
     )
@@ -85,7 +85,7 @@ def test_subscribe_to_plan_invalid_plan_id(test_token):
     }
 
     response = client.post(
-        "/billing-management/assign-plan",
+        "/billing-manager/assign-plan",
         json=request_data,
         headers={"token": test_token}
     )
@@ -107,7 +107,7 @@ def test_subscribe_to_plan_invalid_card_number(test_token):
     }
 
     response = client.post(
-        "/billing-management/assign-plan",
+        "/billing-manager/assign-plan",
         json=request_data,
         headers={"token": test_token}
     )
@@ -129,7 +129,7 @@ def test_subscribe_to_plan_user_management_error(test_token, mock_link_subscript
     }
 
     response = client.post(
-        "/billing-management/assign-plan",
+        "/billing-manager/assign-plan",
         json=request_data,
         headers={"token": test_token}
     )
