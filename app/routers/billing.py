@@ -76,28 +76,28 @@ def link_subscription_to_user(subscription_data: UserManagementSubscriptionReque
 
 @router.get("/plans", response_model=PlansResponse)
 async def get_subscription_plans(
-    #current_user: dict = Depends(get_current_user)
+    current_user: dict = Depends(get_current_user)
 ):   
-    #if not current_user:
-    #    raise HTTPException(status_code=401, detail="Authentication required")
+    if not current_user:
+       raise HTTPException(status_code=401, detail="Authentication required")
     
-    #if current_user['user_type'] not in ['company']:
-    #    raise HTTPException(status_code=403, detail="Not authorized to view users")
+    if current_user['user_type'] not in ['company']:
+       raise HTTPException(status_code=403, detail="Not authorized to view users")
     
     return PlansResponse(plans=SUBSCRIPTION_PLANS)
 
 @router.post("/assign-plan", response_model=SubscriptionResponse)
 async def subscribe_to_plan(subscription: SubscriptionRequest,
-        #current_user: dict = Depends(get_current_user)                     
+        current_user: dict = Depends(get_current_user)                     
     ):
     
-    #if not current_user:
-    #    raise HTTPException(status_code=401, detail="Authentication required")
+    if not current_user:
+       raise HTTPException(status_code=401, detail="Authentication required")
     
-    #if current_user['user_type'] not in ['company']:
-    #    raise HTTPException(status_code=403, detail="Not authorized to view users")
+    if current_user['user_type'] not in ['company']:
+       raise HTTPException(status_code=403, detail="Not authorized to view users")
     
-    #token = jwt.encode(current_user, SECRET_KEY, algorithm=ALGORITHM)
+    token = jwt.encode(current_user, SECRET_KEY, algorithm=ALGORITHM)
 
     plan = next((p for p in SUBSCRIPTION_PLANS if p.id == subscription.plan_id), None)
     if not plan:
@@ -108,7 +108,7 @@ async def subscribe_to_plan(subscription: SubscriptionRequest,
         company_id=subscription.company_id
     )
     
-    response_data, status_code = link_subscription_to_user(user_management_subscription, 'token')
+    response_data, status_code = link_subscription_to_user(user_management_subscription, token)
     if status_code != 200:
         raise HTTPException(
             status_code=status_code,
