@@ -13,10 +13,11 @@ USER_SERVICE_URL = os.getenv("USER_SERVICE_URL", "http://192.168.68.111:8002/use
 SECRET_KEY = os.environ.get('JWT_SECRET_KEY', 'secret_key')
 ALGORITHM = "HS256"
 
-def get_current_user(token: str = Header(None)):
-    if token is None:
+def get_current_user(authorization: str = Header(None)):
+    if authorization is None:
         return None
     try:
+        token = authorization.replace('Bearer ', '') if authorization.startswith('Bearer ') else authorization
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         return payload
     except jwt.PyJWTError:
@@ -62,7 +63,7 @@ def link_subscription_to_user(subscription_data: UserManagementSubscriptionReque
     api_url = USER_SERVICE_URL
     endpoint = "/company/assign-plan" 
     headers = {
-        "token": f"{token}",
+        "Authorization": f"{token}",
         "Content-Type": "application/json"
     }
     
